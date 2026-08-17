@@ -1,0 +1,22 @@
+[
+  { "id": "D-01", "battery": 92, "status": "Available", "range": 25, "payload": 5, "location": [28.6139, 77.2090], "health": 98, "current_mission": null },
+  { "id": "D-02", "battery": 64, "status": "On Mission", "range": 20, "payload": 3, "location": [28.6200, 77.2100], "health": 90, "current_mission": "M-003" },
+  { "id": "D-03", "battery": 31, "status": "Charging", "range": 30, "payload": 8, "location": [28.6150, 77.2150], "health": 85, "current_mission": null },
+  { "id": "D-04", "battery": 18, "status": "Maintenance", "range": 15, "payload": 2, "location": [28.6110, 77.2050], "health": 40, "current_mission": null },
+  { "id": "D-05", "battery": 100, "status": "Available", "range": 40, "payload": 10, "location": [28.6140, 77.2180], "health": 100, "current_mission": null },
+  { "id": "D-06", "battery": 80, "status": "Available", "range": 20, "payload": 4, "location": [28.6300, 77.2200], "health": 95, "current_mission": null },
+  { "id": "D-07", "battery": 72, "status": "Available", "range": 35, "payload": 6, "location": [28.6100, 77.2300], "health": 92, "current_mission": null },
+  { "id": "D-08", "battery": 45, "status": "Available", "range": 15, "payload": 2, "location": [28.6120, 77.2100], "health": 88, "current_mission": null },
+  { "id": "D-09", "battery": 88, "status": "On Mission", "range": 25, "payload": 5, "location": [28.6400, 77.2000], "health": 96, "current_mission": "M-008" },
+  { "id": "D-10", "battery": 95, "status": "Available", "range": 50, "payload": 12, "location": [28.6500, 77.2100], "health": 99, "current_mission": null },
+  { "id": "D-11", "battery": 22, "status": "Charging", "range": 20, "payload": 3, "location": [28.6100, 77.2400], "health": 82, "current_mission": null },
+  { "id": "D-12", "battery": 55, "status": "Available", "range": 25, "payload": 4, "location": [28.6050, 77.2150], "health": 87, "current_mission": null },
+  { "id": "D-13", "battery": 77, "status": "On Mission", "range": 30, "payload": 7, "location": [28.6250, 77.2250], "health": 91, "current_mission": "M-012" },
+  { "id": "D-14", "battery": 91, "status": "Available", "range": 18, "payload": 2, "location": [28.6150, 77.2000], "health": 97, "current_mission": null },
+  { "id": "D-15", "battery": 60, "status": "Available", "range": 35, "payload": 8, "location": [28.6350, 77.2350], "health": 89, "current_mission": null },
+  { "id": "D-16", "battery": 15, "status": "Charging", "range": 22, "payload": 4, "location": [28.6250, 77.2050], "health": 75, "current_mission": null },
+  { "id": "D-17", "battery": 100, "status": "Available", "range": 45, "payload": 10, "location": [28.6450, 77.2450], "health": 100, "current_mission": null },
+  { "id": "D-18", "battery": 85, "status": "On Mission", "range": 28, "payload": 5, "location": [28.6150, 77.2550], "health": 93, "current_mission": "M-021" },
+  { "id": "D-19", "battery": 48, "status": "Available", "range": 20, "payload": 3, "location": [28.6000, 77.2000], "health": 86, "current_mission": null },
+  { "id": "D-20", "battery": 94, "status": "On Mission", "range": 32, "payload": 6, "location": [28.6300, 77.2150], "health": 96, "current_mission": "M-004" }
+]

@@ -1,0 +1,20 @@
+# Python caching
+__pycache__/
+*.pyc
+
+# Local Database
+dronemind.db
+*.db-journal
+
+# Environment config
+.env
+.env.local
+
+# IDE & Editor settings
+.vscode/
+.idea/
+
+# Local media / logs / temporary files
+*.webp
+*.png
+*.log
