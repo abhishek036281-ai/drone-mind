@@ -358,6 +358,7 @@ const api = {
             }
             return { message: `Drone ${droneId} failed. Local re-optimization triggered.` };
         }
+
         try {
             const url = orgId ? `${API_BASE}/user/simulate/drone-failure?drone_id=${droneId}&org_id=${orgId}` : `${API_BASE}/simulate/drone-failure?drone_id=${droneId}`;
             const res = await fetch(url, { method: "POST" });
@@ -366,6 +367,26 @@ const api = {
             clientFallbackActive = true;
             initLocalDB();
             return this.simulateFailure(droneId, orgId);
+        }
+    },
+    async simulateBatteryDrop(droneId, batteryLevel, orgId = null) {
+        if (clientFallbackActive) {
+            const drones = JSON.parse(localStorage.getItem("mock_drones"));
+            const target = drones.find(d => d.id === droneId);
+            if (target) {
+                target.battery = batteryLevel;
+            }
+            localStorage.setItem("mock_drones", JSON.stringify(drones));
+            return { message: `Drone ${droneId} battery dropped locally to ${batteryLevel}%.` };
+        }
+        try {
+            const url = orgId ? `${API_BASE}/user/simulate/battery-drop?drone_id=${droneId}&battery_level=${batteryLevel}&org_id=${orgId}` : `${API_BASE}/simulate/battery-drop?drone_id=${droneId}&battery_level=${batteryLevel}`;
+            const res = await fetch(url, { method: "POST" });
+            return res.json();
+        } catch (e) {
+            clientFallbackActive = true;
+            initLocalDB();
+            return this.simulateBatteryDrop(droneId, batteryLevel, orgId);
         }
     },
     async simulateEmergency(orgId = null) {

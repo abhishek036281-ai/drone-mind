@@ -129,6 +129,16 @@ def simulate_user_drone_failure(drone_id: str, org_id: str = Query("org_cloud_ki
         db.commit()
     return {"message": f"Drone {drone_id} marked as failed."}
 
+@api_router.post("/user/simulate/battery-drop")
+def simulate_user_battery_drop(drone_id: str, battery_level: int, org_id: str = Query("org_cloud_kitchen"), db: Session = Depends(get_db)):
+    drone = db.query(Drone).filter(Drone.id == drone_id, Drone.organization_id == org_id).first()
+    if not drone:
+        drone = db.query(Drone).filter(Drone.id == drone_id).first()
+    if drone:
+        drone.battery = battery_level
+        db.commit()
+    return {"message": f"Drone {drone_id} battery updated to {battery_level}%."}
+
 @api_router.post("/user/simulate/emergency")
 def simulate_user_emergency(org_id: str = Query("org_cloud_kitchen"), db: Session = Depends(get_db)):
     new_mission = Mission(

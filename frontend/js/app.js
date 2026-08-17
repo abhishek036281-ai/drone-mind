@@ -742,16 +742,37 @@ async function simulateFailure() {
     }
 }
 
-function simulateBatteryDrop() {
+async function simulateBatteryDrop() {
     const droneId = document.getElementById("sim-bat-drone-select").value;
     const newBat = document.getElementById("sim-bat-level").value;
     if(!newBat) return;
     
     logSim(`Warning: ${droneId} battery plunged to ${newBat}%.`);
     logAlert(`Warning: ${droneId} low battery.`, "text-orange");
-    const drone = state.drones.find(d => d.id === droneId);
-    if(drone) { drone.battery = parseInt(newBat); }
-    renderFleet();
+    
+    try {
+        await api.simulateBatteryDrop(droneId, parseInt(newBat), currentSession.organization_id);
+        await loadUserData();
+        
+        let affectedHtml = `<div class="text-orange mt-2"><strong>${droneId} &rarr; Battery Dropped to ${newBat}%</strong></div>`;
+        
+        const card = document.getElementById("sim-bat-drone-select").parentElement;
+        let affectedDiv = document.getElementById("sim-bat-affected");
+        if (!affectedDiv) {
+            affectedDiv = document.createElement("div");
+            affectedDiv.id = "sim-bat-affected";
+            card.appendChild(affectedDiv);
+        }
+        affectedDiv.innerHTML = affectedHtml;
+        affectedDiv.style.display = "block";
+        
+        await window.reoptimizeFleet('battery_drop');
+        
+        renderDashboard();
+        renderFleet();
+    } catch (e) {
+        logSim("API error during battery drop simulation.");
+    }
 }
 
 async function simulateEmergency() {
@@ -825,14 +846,21 @@ window.reoptimizeFleet = async function(context) {
         } else if (context === 'emergency') {
             document.getElementById("sim-emg-affected").innerHTML += changesHtml;
             document.getElementById("sim-reoptimize-emg").style.display = "none";
+        } else if (context === 'battery_drop') {
+            document.getElementById("sim-bat-affected").innerHTML += changesHtml;
         }
         
         // Apply
         res.assignments.forEach(a => {
             const m = state.missions.find(mi => mi.id === a.mission);
             const d = state.drones.find(dr => dr.id === a.assigned_drone);
-            if (m) { m.assigned_drone = d.id; m.status = "Active"; }
-            if (d) { d.status = "On Mission"; d.current_mission = m.id; d.battery = a.battery_after_mission; }
+            if (m && d) {
+                m.assigned_drone = d.id;
+                m.status = "Active";
+                d.status = "On Mission";
+                d.current_mission = m.id;
+                d.battery = a.battery_after_mission;
+            }
         });
         
         renderDashboard();
@@ -842,7 +870,8 @@ window.reoptimizeFleet = async function(context) {
         
         logAlert("Re-optimization complete.", "text-green");
     } catch (e) {
-        logSim("API error during re-optimization.");
+        logSim("API error during re-optimization: " + e.message);
+        console.error("Re-optimization error:", e);
     }
 };
 
